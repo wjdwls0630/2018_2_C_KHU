@@ -1,0 +1,10 @@
+/Users/parkjungjin/C++/Practice/Chapter_02/02_4/quiz3.cpp:3:8: error: cannot initialize a variable of type 'int *' with an lvalue of type 'int'
+  int *temp=ptr1;
+       ^    ~~~~
+/Users/parkjungjin/C++/Practice/Chapter_02/02_4/quiz3.cpp:16:3: error: no matching function for call to 'SwapPointer'
+  SwapPointer(ptr1,ptr2);
+  ^~~~~~~~~~~
+/Users/parkjungjin/C++/Practice/Chapter_02/02_4/quiz3.cpp:2:6: note: candidate function not viable: no known conversion from 'int *' to 'int' for 1st argument; dereference the argument with *
+void SwapPointer(int ptr1, int ptr2) {
+     ^
+2 errors generated.
