@@ -1,0 +1,28 @@
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:20:8: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+  for (auto elem : v) {
+       ^
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:20:18: warning: range-based for loop is a C++11 extension [-Wc++11-extensions]
+  for (auto elem : v) {
+                 ^
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:33:32: error: use of undeclared identifier 'result'; did you mean 'resutl'?
+    for (int trial_factor = 2; result&&(trial_factor<=root); trial_factor++) {
+                               ^~~~~~
+                               resutl
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:30:10: note: 'resutl' declared here
+    bool resutl =true;
+         ^
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:34:7: error: use of undeclared identifier 'result'; did you mean 'resutl'?
+      result=(n%trial_factor!=0);
+      ^~~~~~
+      resutl
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:30:10: note: 'resutl' declared here
+    bool resutl =true;
+         ^
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:36:12: error: use of undeclared identifier 'result'; did you mean 'resutl'?
+    return result;
+           ^~~~~~
+           resutl
+/Users/parkjungjin/C++/2018_2_객프/8/8_9.cpp:30:10: note: 'resutl' declared here
+    bool resutl =true;
+         ^
+2 warnings and 3 errors generated.
