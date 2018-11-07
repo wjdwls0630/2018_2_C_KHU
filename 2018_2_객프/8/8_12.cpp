@@ -1,11 +1,13 @@
 #include <iostream>
 
 
-void print(const int a[], int n);
+
+void print(const int *a, int n);
 int sum(int a[], int n);
 void clear(int a[],int n);
 int main() {
   int list[]={2,4,6,8};
+
   print(list,4);
   std::cout << sum(list,4) << '\n';
 
@@ -16,22 +18,26 @@ int main() {
   return 0;
 }
 
-void print(const int a[], int n) {
+
+void print(const int *a, int n) {
   for (int i = 0; i < n; i++) {
-    std::cout << a[i] << ' ';
+    std::cout << *a << ' ';
+    a++;
   }
   std::cout  << '\n';
 }
-int sum(int a[], int n) {
+int sum(int *a, int n) {
   int result=0;
   for (int i = 0; i < n; i++) {
-    result+=a[i];
+    result+=*a;
+    a++;
   }
   return result;
 }
 
 void clear(int a[],int n) {
   for (int i = 0; i < n; i++) {
-    a[i]=0;
+    *a=0;
+    a++;
   }
 }

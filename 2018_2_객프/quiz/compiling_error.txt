@@ -1,0 +1,33 @@
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:9:46: error: a space is required between consecutive right angle brackets (use '> >')
+bool ReadDataFile(std::vector<std::vector<int>> &array);
+                                             ^~
+                                             > >
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:10:53: error: a space is required between consecutive right angle brackets (use '> >')
+void DisplayResult(const std::vector<std::vector<int>> matrix, const std::vector<int> rowV,const std::vector<int> colV);
+                                                    ^~
+                                                    > >
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:11:57: error: a space is required between consecutive right angle brackets (use '> >')
+void ComputeRowNColSum(const std::vector<std::vector<int>> &matrix, std::vector<int> &rowV,std::vector<int> &colV);
+                                                        ^~
+                                                        > >
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:18:30: error: a space is required between consecutive right angle brackets (use '> >')
+  std::vector<std::vector<int>> matrix;
+                             ^~
+                             > >
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:46:46: error: a space is required between consecutive right angle brackets (use '> >')
+bool ReadDataFile(std::vector<std::vector<int>> &array) {
+                                             ^~
+                                             > >
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:51:30: error: a space is required between consecutive right angle brackets (use '> >')
+  std::vector<std::vector<int>> tempMatrix(rowSize,std::vector<int>(colSize));
+                             ^~
+                             > >
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:66:53: error: a space is required between consecutive right angle brackets (use '> >')
+void DisplayResult(const std::vector<std::vector<int>> matrix, const std::vector<int> rowV,const std::vector<int> colV) {
+                                                    ^~
+                                                    > >
+/Users/parkjungjin/C++/2018_2_객프/quiz/quiz5_1.cpp:81:57: error: a space is required between consecutive right angle brackets (use '> >')
+void ComputeRowNColSum(const std::vector<std::vector<int>> &matrix, std::vector<int> &rowV, std::vector<int> &colV) {
+                                                        ^~
+                                                        > >
+8 errors generated.

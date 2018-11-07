@@ -13,6 +13,7 @@ int main() {
         printf("%dx%d= %d ",j,i,j*i );
 
       }
+      //printf("%dx%d=%2d ",j,i,j*i );
 
     }
     printf("\n" );
