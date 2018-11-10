@@ -2,19 +2,18 @@
 #include "day09_1.h"
 
 int main() {
-  Fraction fr1(4,5),fr2(19),fr3,fr4(fr1),fr5;
-  Fraction *pfr1 = new Fraction();
-  fr5=inputFraction();
+  Fraction fr1(4,5),fr2(4,6);
+  fr1.multiplyBy(fr2);
   fr1.print();
   std::cout  << '\n';
   fr2.print();
   std::cout  << '\n';
+  Fraction fr3=add(fr1,fr2);
   fr3.print();
   std::cout  << '\n';
+  Fraction fr4=multiply(fr1, fr2);
   fr4.print();
   std::cout  << '\n';
-  fr5.print();
-  std::cout  << '\n';
-  delete pfr1;
+
   return 0;
 }
