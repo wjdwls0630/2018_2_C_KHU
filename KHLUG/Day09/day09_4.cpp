@@ -2,7 +2,7 @@
 #include "day09_1.h"
 
 int main() {
-  Fraction fr1(4,5),fr2(4,6);
+  Fraction fr1(4,5),fr2(4);
   fr1.multiplyBy(fr2);
   fr1.print();
   std::cout  << '\n';

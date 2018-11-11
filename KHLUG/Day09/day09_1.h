@@ -8,9 +8,11 @@ private:
   int denominator;
 
 public:
+  /*
   Fraction();
   Fraction(int numerator);
-  Fraction(int numerator, int denominator);
+  */
+  Fraction(int numerator=0, int denominator=1);
   Fraction(const Fraction &fr);
   ~Fraction();
   void store(int numerator, int denominator);
@@ -36,6 +38,7 @@ Fraction inputFraction();
 Fraction add(const Fraction &fr1, const Fraction &fr2);
 
 //Fraction Member function definition
+/*
 Fraction::Fraction(){
   std::cout << "Hello Fraction"<<'\n';
   this->numerator=0;
@@ -45,7 +48,7 @@ Fraction::Fraction(int numerator){
   std::cout << "Hello Fraction"<<'\n';
   this->numerator=numerator;
   this->denominator=1;
-}
+}*/
 Fraction::Fraction(int numerator, int denominator){
 
   if (denominator==0) {
