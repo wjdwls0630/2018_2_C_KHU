@@ -37,13 +37,19 @@ int Stack::find_index(int _item) {
   return index;
 }
 void Stack::push(int _item){
-  if (find_index(_item)==-1) {
+  if (size==MAX_SIZE) {
+    std::cout << "Error: out of memory" << '\n';
+  } else if (find_index(_item)==-1) {
     p_list[size]=_item;
     size++;
   }
 
 }
 int Stack::pop(){
+  if (size==0) {
+    std::cout << "Error : No items exists in the list" << '\n';
+    return 0;
+  }
   int result=p_list[size-1];
   size--;
   return result;
@@ -66,7 +72,8 @@ int Stack::get_item(int _index) const {
 
 int main() {
   Stack s1(5);
-
+  std::cout << "There is no item in list and use pop()" << '\n';
+  s1.pop();
   std::cout << "push the item to list" << '\n';
   s1.push(1);
   s1.push(2);
@@ -79,6 +86,10 @@ int main() {
   std::cout << "index 1 = " <<s1.get_item(1)<< '\n';
   std::cout << "pop : " <<s1.pop()<< '\n';
   s1.print();
+  std::cout << "push more than MAX_SIZE" << '\n';
+  s1.push(8);
+  s1.push(9);
+  s1.push(12);
   std::cout << "where is 4 ? : " <<s1.find_index(4)<< '\n';
 
 
