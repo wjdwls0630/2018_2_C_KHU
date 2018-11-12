@@ -192,7 +192,6 @@ int main() {
   delete ps;
   std::cout << "After delete ps, Number of created objects : " <<Stack::get_num_stacks()<< '\n';
 
-  return 0;
 
   return 0;
 }

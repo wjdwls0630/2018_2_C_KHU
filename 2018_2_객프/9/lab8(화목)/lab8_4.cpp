@@ -54,11 +54,12 @@ int WriteRecordToFile(ofstream& outFile, string fName, string eventName){
   return 1;
 }
 int ReadRecordFile(ifstream& inFile, string& fName, string& eventName){
-  if (inFile.fail()||inFile.eof()) {
+  if (inFile.fail()||(!inFile)) {
     return 0;
+  } else{
+    inFile>>fName>>eventName;
+    return 1;
   }
-  inFile>>fName>>eventName;
-  return 1;
 }
 void WriteRecordToScreen(string fName, string eventName){
   if (fName==""&&eventName=="") {

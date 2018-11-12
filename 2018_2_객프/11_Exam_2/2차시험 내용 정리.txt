@@ -1,0 +1,31 @@
+1. 포인터
+
+포인터는 주소를 담는 변수로 사용된다.
+int *p = &a;
+int*p ;
+p= &a;
+
+이런식으로 선언하고 앞에 데이터형은 알맞게 써야한다. int 형 변수를 담을거면 int형 포인터식으로 해야한다.
+즉 , 담을 변수의 데이터형과 일치해야한다.
+
+그냥 p는 주소값을 가져오고 *p는 그 주소의 실체값을 불러온다.
+
+function pointer
+
+ex 1)
+int evaluate (int(*f)(int,int),int x, int y){
+return f(x,y);
+}
+evaluate(&add,5,4);
+
+ex 2)
+int (*f)(int,int);
+f=add;
+cout<<f(2,4)<<'\n'
+
+저 function pointer는 리턴 타입, 파라미터 타입이 모두 맞는 함수가 들어갈 수있다.
+
+2. 벡터
+
+1차원 std::vector<데이터형> 벡터명(크기);
+2차원 std::vector<std::vector<데이터형>> 벡터명(행 크기, std::vector<데이터형>(열 크기))
