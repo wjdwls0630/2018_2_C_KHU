@@ -5,6 +5,7 @@
 #include <array>
 #include <algorithm>
 
+//sort and search function declaration
 const int size = 30000;
 void SelectionSort(int *a);
 void BubbleSort(int *a);
@@ -15,6 +16,8 @@ void swap(int *a, int *b);
 void make_list(int *a);
 void print_list(int *a);
 
+
+//class StopWatch declaration
 class StopWatch {
 private:
   clock_t start_time;
@@ -29,37 +32,9 @@ public:
   double elapsed() const;
   bool is_running() const;
 };
-StopWatch::StopWatch () : start_time(0),running(false),elapsed_time(0.0){}
-void StopWatch::start(){
-  if (!running) {
-    running=true;
-    start_time=clock();
-  }
-}
-void StopWatch::stop(){
-  if (running) {
-    clock_t stop_time=clock();
-    running=false;
-    elapsed_time+= static_cast<double>((stop_time-start_time))/CLOCKS_PER_SEC;
 
-  }
 
-}
-void StopWatch::reset(){
-  running=false;
-  elapsed_time=0.0;
-}
-double StopWatch::elapsed() const{
-  if (running) {
-    clock_t current_time=clock();
-    return elapsed_time+static_cast<double>((current_time-start_time))/CLOCKS_PER_SEC;
-  } else{
-    return elapsed_time;
-  }
-}
-bool StopWatch::is_running() const{
-  return running;
-}
+
 
 int main() {
   int list[size];
@@ -99,7 +74,7 @@ int main() {
     temp_list[i]=list[i];
   }
   timer.start();
-  std::sort(list,list+size);
+  std::sort(temp_list,temp_list+size);
   timer.stop();
   std::cout << "algorithm sort elapsed: " << timer.elapsed() << " seconds\n";
   timer.reset();
@@ -128,19 +103,22 @@ int main() {
 
   return 0;
 }
+
+
+//sort and search function declaration
+
+
 void SelectionSort(int *a) {
   int smallest_index=0;
   for (int i = 0; i < size-1; i++) {
     smallest_index=i;
     for (int j = i+1; j < size; j++) {
-      if (*(a+j)<*(a+smallest_index)) {
+      if (*(a+j)< *(a+smallest_index)) {
         smallest_index=j;
       }
     }
     swap((a+i),(a+smallest_index));
-
   }
-
 }
 void BubbleSort(int *a) {
   for (int i = 0; i < size; i++) {
@@ -214,4 +192,38 @@ void print_list(int *a) {
     std::cout << *(a+i)<<' ' ;
   }
   std::cout  << '\n';
+}
+
+
+//class StopWatch definition
+StopWatch::StopWatch () : start_time(0),running(false),elapsed_time(0.0){}
+void StopWatch::start(){
+  if (!running) {
+    running=true;
+    start_time=clock();
+  }
+}
+void StopWatch::stop(){
+  if (running) {
+    clock_t stop_time=clock();
+    running=false;
+    elapsed_time+= static_cast<double>((stop_time-start_time))/CLOCKS_PER_SEC;
+
+  }
+
+}
+void StopWatch::reset(){
+  running=false;
+  elapsed_time=0.0;
+}
+double StopWatch::elapsed() const{
+  if (running) {
+    clock_t current_time=clock();
+    return elapsed_time+static_cast<double>((current_time-start_time))/CLOCKS_PER_SEC;
+  } else{
+    return elapsed_time;
+  }
+}
+bool StopWatch::is_running() const{
+  return running;
 }

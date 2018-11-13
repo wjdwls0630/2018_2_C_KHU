@@ -16,9 +16,11 @@ void print_list(int *a);
 
 int main() {
   int list[size];
+  int target=rand()%100+1;
   make_list(list);
   print_list(list);
   SelectionSort(list);
+  std::cout << BinarySearch(list, target) << '\n';
   print_list(list);
 
   return 0;
