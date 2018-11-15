@@ -17,11 +17,6 @@ int main() {
   for (int i = 0; i < tr_num; i++) {
     std::cin >> week>>day>>weather;
     ofs<<weather_forecast(week,  day,  weather);
-
-
-
-
-
   }
 
   return 0;

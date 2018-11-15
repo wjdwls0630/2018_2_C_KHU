@@ -25,7 +25,14 @@ void DeleteByName(vector<string> &nameList, vector<string> &eventList);
 int main(){
   std::vector<string> nameList(20);
   std::vector<string> eventList(20);
+  nameList[0]="sss";
+  eventList[0]="ffff";
+  nameList[1]="ggg";
+  eventList[1]="adfasfdas";
+  nameList[2]="kk";
+  eventList[2]="agasdfsdfss";
   int command;
+  DisplayAllOnScreen(nameList, eventList);
   while ((command=GetCommand())) {
     switch (command) {
       case 0:
@@ -89,7 +96,8 @@ int GetCommand(){
 
 int ReadRecordFromKB(string& fName, string& eventName){
   string select="";
-  std::cout << "Enter a photo record consisting event name : ";
+  std::cout << "Read a photo file(event name)" << '\n';
+  std::cout << "Event name --> ";
   std::cin >> eventName;
   if (cin.fail()) {
     cin.clear();
@@ -128,7 +136,7 @@ int ReadRecordFile(ifstream& inFile, string& fName, string& eventName){
 }
 void WriteRecordToScreen(string fName, string eventName){
   if (fName==""&&eventName=="") {
-    std::cout << "데이터 없음" << '\n';
+    return;
   } else{
     std::cout << fName <<" , "<<eventName<< '\n';
   }
@@ -193,6 +201,9 @@ int SearchByPrimKey (vector<string> v, string inName){
 void DisplayAllOnScreen(vector<string> &nameList, vector<string> &eventList){
   std::cout << "********* [  Records in the List  ] *********" << '\n';
   for (int i = 0; i < nameList.size(); i++) {
+    if (nameList[i]=="") {
+      return;
+    }
     std::cout << "Records " <<i<<"  :   ";
     WriteRecordToScreen(nameList[i],eventList[i]);
   }
@@ -200,22 +211,25 @@ void DisplayAllOnScreen(vector<string> &nameList, vector<string> &eventList){
 
 void FindAndDisplay(vector<string> &nameList, vector<string> &eventList){
   std::string inName="";
-  std::cout << "찾을 파일 명을 입력하세요 : ";
+  std::cout << "********* [  Search and Display  ] *********" << '\n';
+  std::cout << "Enter a file name to search --> ";
   std::cin >> inName;
   int index=SearchByPrimKey(nameList, inName);
   if (index==-1) {
-    std::cout << "해당 파일 정보가 없습니다" << '\n';
+    std::cout << "No such file information" << '\n';
   }else {
+    std::cout << "Records " <<index<<"  :   ";
     WriteRecordToScreen(nameList[index], eventList[index]);
   }
 }
 void DeleteByName(vector<string> &nameList, vector<string> &eventList){
   std::string inName="";
-  std::cout << "지울 파일 명을 입력하세요 : ";
+  std::cout << "********* [  Delete record by name  ] *********" << '\n';
+  std::cout << "Enter a file name to erase --> ";
   std::cin >> inName;
   int index=SearchByPrimKey(nameList, inName);
   if (index==-1) {
-    std::cout << "해당 파일 정보가 없습니다" << '\n';
+    std::cout << "No such file information" << '\n';
   }else {
     nameList.erase(nameList.begin()+index);
     eventList.erase(eventList.begin()+index);
