@@ -42,7 +42,9 @@ int main() {
     }
     std::cout << '\n';
   }
-  PrintArray(big_list,row);
+  void (*f)(int *, int);
+  f=PrintArray;
+  f(big_list,row);
   delete [] big_list;
 
   return 0;
