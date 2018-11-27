@@ -53,6 +53,10 @@ public:
   //activate Special skill declaration(pure virtual function)
   virtual void activateSpecialAbility() =0;
 
+  //changeSkilstatus declaration(pure virtual function)
+  virtual void changeSkilstatus() =0;
+  
+
 };
 //Initiallize Static member data(countUnit);
 int Unit::countUnit=0;

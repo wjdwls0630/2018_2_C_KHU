@@ -39,6 +39,9 @@ public:
   //getAttackPoint override declaration
   float getAttackPoint() const override;
 
+  //changeSkilstatus definition
+  void changeSkilstatus() override;
+
 };
 
 //Initiallize Static member data(countMarine);
@@ -86,6 +89,7 @@ const std::string Marine::getClassName() const { return "Marine"; }
 //activate Special skill definition
 void Marine::activateSpecialAbility(){
   if (isSteamPacked==false) {
+    std::cout << this->getClassName() <<this->getNumber() <<" ";
     if (this->getEnergy()-20<=0) {
       std::cout << "Energy is too low to activate." << '\n';
       std::cout << "SteamPack can't be activated" << '\n';
@@ -95,9 +99,6 @@ void Marine::activateSpecialAbility(){
       std::cout << "SteamPack is activated" << '\n';
       isSteamPacked=true;
     }
-  }else{
-    this->setAttackPoint(32.1);
-    std::cout << "SteamPack is deactivated" << '\n';
   }
 }
 
@@ -107,6 +108,15 @@ float Marine::getAttackPoint() const {
     return Unit::getAttackPoint();
   } else{
     return Unit::getAttackPoint()*1.5;
+  }
+}
+
+//changeSkilstatus definition
+void Marine::changeSkilstatus(){
+  if (this->isSteamPacked==true) {
+    this->isSteamPacked=false;
+    std::cout << this->getClassName() <<this->getNumber() <<" ";
+    std::cout << "SteamPack is deactivated" << '\n';
   }
 }
 

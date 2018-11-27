@@ -10,7 +10,7 @@ private:
   //class Zergling Member data declaration(property)
   static int countZergling;
   int numberOfDefenceUp;
-  bool isDefenceUp;
+
 
 public:
   //class Zergling Member Function declaraltion(method)
@@ -37,6 +37,9 @@ public:
   //setEnergy override declaration
   void setEnergy(const float &remainEnergy) override;
 
+  //changeSkilstatus definition
+  void changeSkilstatus() override;
+
 };
 
 //Initiallize Static member data(countZergling);
@@ -49,7 +52,7 @@ int Zergling::getCountZergling() { return countZergling; }
 
 //constructor definition
 Zergling::Zergling()
-:Unit(),isDefenceUp(false),numberOfDefenceUp(0){
+:Unit(),numberOfDefenceUp(0){
   countZergling++;
   this->setAttackPoint(21.5);
   this->setEnergy(50.0);
@@ -57,7 +60,7 @@ Zergling::Zergling()
   std::cout << this->getClassName() <<this->getNumber() <<'\n';
 }
 Zergling::Zergling(const int &x, const int &y, const int &z)
-:Unit(x,y,z,21.5,50.0),isDefenceUp(false),numberOfDefenceUp(0){
+:Unit(x,y,z,21.5,50.0),numberOfDefenceUp(0){
   countZergling++;
   this->setNumber(countZergling);
   std::cout << this->getClassName() <<this->getNumber() <<'\n';
@@ -82,30 +85,37 @@ const std::string Zergling::getClassName() const { return "Zergling"; }
 
 //activate Special skill definition
 void Zergling::activateSpecialAbility(){
-  if (isDefenceUp==false) {
-    isDefenceUp=true;
-    numberOfDefenceUp=3;
+  if (this->numberOfDefenceUp==0) {
+    this->numberOfDefenceUp=3;
+    std::cout << this->getClassName() <<this->getNumber() <<" ";
     std::cout << "DefenceUp is activated" << '\n';
-  }else{
-    if (numberOfDefenceUp==0) {
-      isDefenceUp=false;
-      std::cout << "DefenceUp is deactivated" << '\n';
-    } else{
-
-    }
-
   }
 }
 
 //setEnergy override definition
 void Zergling::setEnergy(const float &remainEnergy){
   float attackPoint=Unit::getEnergy()-remainEnergy;
-  if (isDefenceUp==false) {
+  if (this->numberOfDefenceUp==0) {
     Unit::setEnergy(Unit::getEnergy()-attackPoint);
   } else{
     Unit::setEnergy(Unit::getEnergy()-(attackPoint/2));
   }
 }
+
+//changeSkilstatus definition
+void Zergling::changeSkilstatus(){
+  if (this->numberOfDefenceUp!=0) {
+    this->numberOfDefenceUp--;
+    if (this->numberOfDefenceUp==0) {
+      std::cout << this->getClassName() <<this->getNumber() <<" ";
+      std::cout << "DefenceUp is deactivated" << '\n';
+    }else{
+      std::cout << this->getClassName() <<this->getNumber() <<" ";
+      std::cout <<this->numberOfDefenceUp <<" DefenceUp left" << '\n';
+    }
+  }
+}
+
 
 
 #endif /* Zergling_hpp */

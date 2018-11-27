@@ -10,7 +10,6 @@ private:
   //class BattleCruiser Member data declaration(property)
   static int countBattleCruiser;
   int numberOfYamato;
-  bool isYamato;
 
 public:
   //class BattleCruiser Member Function declaraltion(method)
@@ -37,6 +36,9 @@ public:
   //getAttackPoint override declaration
   float getAttackPoint() const override;
 
+  //changeSkilstatus definition
+  void changeSkilstatus() override;
+
 };
 
 //Initiallize Static member data(countBattleCruiser);
@@ -49,7 +51,7 @@ int BattleCruiser::getCountBattleCruiser() { return countBattleCruiser; }
 
 //constructor definition
 BattleCruiser::BattleCruiser()
-:Unit(),isYamato(false),numberOfYamato(0){
+:Unit(),numberOfYamato(0){
   countBattleCruiser++;
   this->setAttackPoint(82.4);
   this->setEnergy(250.0);
@@ -57,7 +59,7 @@ BattleCruiser::BattleCruiser()
   std::cout << this->getClassName() <<this->getNumber() <<'\n';
 }
 BattleCruiser::BattleCruiser(const int &x, const int &y, const int &z)
-:Unit(x,y,z,82.4,250.0),isYamato(false),numberOfYamato(0){
+:Unit(x,y,z,82.4,250.0),numberOfYamato(0){
   countBattleCruiser++;
   this->setNumber(countBattleCruiser);
   std::cout << this->getClassName() <<this->getNumber() <<'\n';
@@ -82,32 +84,37 @@ const std::string BattleCruiser::getClassName() const { return "BattleCruiser"; 
 
 //activate Special skill definition
 void BattleCruiser::activateSpecialAbility(){
-  if (isYamato==false) {
-    isYamato=true;
-    numberOfYamato=3;
-    this->setAttackPoint(getAttackPoint());
+  if (this->numberOfYamato==0) {
+    this->numberOfYamato=3;
+    std::cout << this->getClassName() <<this->getNumber() <<" ";
     std::cout << "Yamato is activated" << '\n';
-  }else{
-    if (numberOfYamato==0) {
-      isYamato=false;
-      this->setAttackPoint(getAttackPoint());
-      std::cout << "Yamato is deactivated" << '\n';
-    } else{
-
-    }
-
   }
 }
 
 
 //getAttackPoint override definition
 float BattleCruiser::getAttackPoint() const {
-  if (isYamato==false) {
+  if (this->numberOfYamato==0) {
     return Unit::getAttackPoint();
   } else{
     return 300.0;
   }
 }
+
+//changeSkilstatus definition
+void BattleCruiser::changeSkilstatus(){
+  if (this->numberOfYamato!=0) {
+    this->numberOfYamato--;
+    if (this->numberOfYamato==0) {
+      std::cout << this->getClassName() <<this->getNumber() <<" ";
+      std::cout << "Yamato is deactivated" << '\n';
+    }else{
+      std::cout << this->getClassName() <<this->getNumber() <<" ";
+      std::cout <<this->numberOfYamato <<" Yamato left" << '\n';
+    }
+  }
+}
+
 
 
 #endif /* BattleCruiser_hpp */
