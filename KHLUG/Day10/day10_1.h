@@ -67,7 +67,7 @@ public:
   const Fraction operator++(int);
 };
 
-//Initiallize Static meber data;
+//Initiallize Static member data;
 int Fraction::countFraction=0;
 
 //function declaration
