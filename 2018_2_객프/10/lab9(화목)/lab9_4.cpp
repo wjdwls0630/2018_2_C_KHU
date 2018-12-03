@@ -8,6 +8,8 @@
 #include <vector>
 using namespace std;
 
+
+string nowTime();
 int GetCommand();
 int ReadRecordFromKB(std::string& fName, string& eventName);
 int WriteRecordToFile(ofstream& outFile, string fName, string eventName);
@@ -21,49 +23,29 @@ int SearchByPrimKey (vector<string> v, string inName);
 void DisplayAllOnScreen(vector<string> &nameList, vector<string> &eventList);
 void FindAndDisplay(vector<string> &nameList, vector<string> &eventList);
 void DeleteByName(vector<string> &nameList, vector<string> &eventList);
+void Run(vector<string> &nameList, vector<string> &eventList);
 
 int main(){
   std::vector<string> nameList(20);
   std::vector<string> eventList(20);
-  nameList[0]="sss";
-  eventList[0]="ffff";
-  nameList[1]="ggg";
-  eventList[1]="adfasfdas";
-  nameList[2]="kk";
-  eventList[2]="agasdfsdfss";
-  int command;
-  DisplayAllOnScreen(nameList, eventList);
-  while ((command=GetCommand())) {
-    switch (command) {
-      case 0:
-        return 0;
-      case 1:
-      AddRecordToList(nameList, eventList);
-      break;
-      case 2:
-      ReadAllFromFile(nameList, eventList);
-      break;
-      case 3:
-      WriteAllToFile(nameList, eventList);
-      break;
-      case 4:
-      DisplayAllOnScreen(nameList, eventList);
-      break;
-      case 5:
-      FindAndDisplay(nameList, eventList);
-      break;
-      case 6:
-      DeleteByName(nameList, eventList);
-      break;
-      default :
-      std::cout << "Invalid operation" << '\n';
-      break;
-    }
-  }
   nameList.clear();
   eventList.clear();
-  //Run(nameList,eventList);
+  Run(nameList,eventList);
   return 1;
+}
+string nowTime(){
+  // Declaring argument for time()
+  time_t tt;
+  // Declaring variable to store return value of localtime()
+  struct tm * ti;
+  // Applying time()
+  time (&tt);
+  // Using localtime()
+  ti = localtime(&tt);
+  stringstream ss;
+  ss << setw(4)<<ti->tm_year+1900<<setfill('0')<<setw(2)<<ti->tm_mon+1<<setfill('0') <<setw(2)<<ti->tm_mday<<setfill('0')<<setw(2)<<ti->tm_hour<<setfill('0')<<setw(2) <<ti->tm_min<<setfill('0')<<setw(2)<<ti->tm_sec<<"\0";
+  string ymd=ss.str();
+  return ymd;
 }
 int GetCommand(){
   int temp;
@@ -96,7 +78,9 @@ int GetCommand(){
 
 int ReadRecordFromKB(string& fName, string& eventName){
   string select="";
-  std::cout << "Read a photo file(event name)" << '\n';
+  std::cout << "Read a photo file(photo name and event name)" << '\n';
+  std::cout << "Photo name --> ";
+  std::cin >> fName;
   std::cout << "Event name --> ";
   std::cin >> eventName;
   if (cin.fail()) {
@@ -104,18 +88,7 @@ int ReadRecordFromKB(string& fName, string& eventName){
     cin.ignore(INT_MAX, '\n');
     return 0;
   }
-  // Declaring argument for time()
-  time_t tt;
-  // Declaring variable to store return value of localtime()
-  struct tm * ti;
-  // Applying time()
-  time (&tt);
-  // Using localtime()
-  ti = localtime(&tt);
-  stringstream ss;
-  ss << setw(4)<<ti->tm_year+1900<<setfill('0')<<setw(2)<<ti->tm_mon+1<<setfill('0') <<setw(2)<<ti->tm_mday<<setfill('0')<<setw(2)<<ti->tm_hour<<setfill('0')<<setw(2) <<ti->tm_min<<setfill('0')<<setw(2)<<ti->tm_sec<<"\0";
-  string ymd=ss.str();
-  fName=ymd;
+
   return 1;
 
 }
@@ -162,7 +135,7 @@ int AddRecordToList(vector<string> &pName, vector<string> &eName){
   return result;
 }
 int ReadAllFromFile(vector<string> &nameList, vector<string> &eventList){
-  ifstream inFile("lab9_4.dat");
+  ifstream inFile(nowTime()+".dat");
   int result=1;
   for (int i = 0; i < nameList.size(); i++) {
     if (result==0) {
@@ -175,7 +148,7 @@ int ReadAllFromFile(vector<string> &nameList, vector<string> &eventList){
 }
 
 int WriteAllToFile(vector<string> &nameList, vector<string> &eventList){
-  ofstream outFile("lab9_4.dat");
+  ofstream outFile(nowTime()+".dat");
   int result=1;
   for (int i = 0; i < nameList.size(); i++) {
     if (result==0) {
@@ -233,5 +206,42 @@ void DeleteByName(vector<string> &nameList, vector<string> &eventList){
   }else {
     nameList.erase(nameList.begin()+index);
     eventList.erase(eventList.begin()+index);
+  }
+}
+void Run(vector<string> &nameList, vector<string> &eventList){
+  nameList.push_back("sss");
+  eventList.push_back("ffff");
+  nameList.push_back("ggg");
+  eventList.push_back("adfasfdas");
+  nameList.push_back("kk");
+  eventList.push_back("agasdfsdfss");
+  DisplayAllOnScreen(nameList, eventList);
+  int command;
+  while ((command=GetCommand())) {
+    switch (command) {
+      case 0:
+        return ;
+      case 1:
+      AddRecordToList(nameList, eventList);
+      break;
+      case 2:
+      ReadAllFromFile(nameList, eventList);
+      break;
+      case 3:
+      WriteAllToFile(nameList, eventList);
+      break;
+      case 4:
+      DisplayAllOnScreen(nameList, eventList);
+      break;
+      case 5:
+      FindAndDisplay(nameList, eventList);
+      break;
+      case 6:
+      DeleteByName(nameList, eventList);
+      break;
+      default :
+      std::cout << "Invalid operation" << '\n';
+      break;
+    }
   }
 }

@@ -1,3 +1,0 @@
-today is friday this is even day and the weather is rainy
-today is monday this is odd day and the weather is cloudy
-today is tuesday this is even day and the weather is sunny
