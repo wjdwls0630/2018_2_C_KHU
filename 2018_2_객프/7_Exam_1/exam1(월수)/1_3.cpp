@@ -5,6 +5,7 @@
 using namespace std;
 
 string weather_forecast(string week, int day,int weather);
+
 int main() {
   int tr_num=0;
   std::cin >> tr_num;
