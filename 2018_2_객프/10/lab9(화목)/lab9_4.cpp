@@ -9,7 +9,7 @@
 using namespace std;
 
 
-string nowTime();
+
 int GetCommand();
 int ReadRecordFromKB(std::string& fName, string& eventName);
 int WriteRecordToFile(ofstream& outFile, string fName, string eventName);
@@ -33,20 +33,7 @@ int main(){
   Run(nameList,eventList);
   return 1;
 }
-string nowTime(){
-  // Declaring argument for time()
-  time_t tt;
-  // Declaring variable to store return value of localtime()
-  struct tm * ti;
-  // Applying time()
-  time (&tt);
-  // Using localtime()
-  ti = localtime(&tt);
-  stringstream ss;
-  ss << setw(4)<<ti->tm_year+1900<<setfill('0')<<setw(2)<<ti->tm_mon+1<<setfill('0') <<setw(2)<<ti->tm_mday<<setfill('0')<<setw(2)<<ti->tm_hour<<setfill('0')<<setw(2) <<ti->tm_min<<setfill('0')<<setw(2)<<ti->tm_sec<<"\0";
-  string ymd=ss.str();
-  return ymd;
-}
+
 int GetCommand(){
   int temp;
   while (1) {
@@ -79,8 +66,10 @@ int GetCommand(){
 int ReadRecordFromKB(string& fName, string& eventName){
   string select="";
   std::cout << "Read a photo file(photo name and event name)" << '\n';
+
   std::cout << "Photo name --> ";
   std::cin >> fName;
+
   std::cout << "Event name --> ";
   std::cin >> eventName;
   if (cin.fail()) {
@@ -88,6 +77,21 @@ int ReadRecordFromKB(string& fName, string& eventName){
     cin.ignore(INT_MAX, '\n');
     return 0;
   }
+  /*
+  // Declaring argument for time()
+  time_t tt;
+  // Declaring variable to store return value of localtime()
+  struct tm * ti;
+  // Applying time()
+  time (&tt);
+  // Using localtime()
+  ti = localtime(&tt);
+  stringstream ss;
+  ss << setw(4)<<ti->tm_year+1900<<setfill('0')<<setw(2)<<ti->tm_mon+1<<setfill('0') <<setw(2)<<ti->tm_mday<<setfill('0')<<setw(2)<<ti->tm_hour<<setfill('0')<<setw(2) <<ti->tm_min<<setfill('0')<<setw(2)<<ti->tm_sec<<"\0";
+  string ymd=ss.str();
+  fName=ymd;
+  */
+
 
   return 1;
 
@@ -116,26 +120,21 @@ void WriteRecordToScreen(string fName, string eventName){
 }
 
 int AddRecordToList(vector<string> &pName, vector<string> &eName){
-  int index=0;
+
   int result=1;
   std::string fName;
   std::string eventName;
-  for (int i = 0; i < pName.size(); i++) {
-    if (pName[i]=="") {
-      index=i;
-      break;
-    }
-  }
+
   result=ReadRecordFromKB(fName, eventName);
   if (result==0) {
     return result;
   }
-  pName[index]=fName;
-  eName[index]=eventName;
+  pName.push_back(fName);
+  eName.push_back(eventName);
   return result;
 }
 int ReadAllFromFile(vector<string> &nameList, vector<string> &eventList){
-  ifstream inFile(nowTime()+".dat");
+  ifstream inFile("lab9_4.dat");
   int result=1;
   for (int i = 0; i < nameList.size(); i++) {
     if (result==0) {
@@ -148,7 +147,7 @@ int ReadAllFromFile(vector<string> &nameList, vector<string> &eventList){
 }
 
 int WriteAllToFile(vector<string> &nameList, vector<string> &eventList){
-  ofstream outFile(nowTime()+".dat");
+  ofstream outFile("lab9_4.dat");
   int result=1;
   for (int i = 0; i < nameList.size(); i++) {
     if (result==0) {
