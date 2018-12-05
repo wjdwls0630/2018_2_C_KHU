@@ -29,7 +29,7 @@ int main() {
   }
   for (int i = 0; i < 10; i++) {
     if (target==num_count_list[i]) {
-      printf("정수 :%2d,  최대 빈도수 :%d2회 \n",i,target );
+      printf("정수 :%2d,  최대 빈도수 :%2d회 \n",i,target );
     }
   }
 
