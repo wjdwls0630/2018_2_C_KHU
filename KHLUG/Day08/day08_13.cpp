@@ -80,19 +80,17 @@ int BinarySearch(int *a, int target) {
   int left=0;
   int right=size-1;
   int mid;
-  int result;
   while (left<=right) {
-    mid=left+(left+right)/2;
+    mid=left+(right-left)/2;
     if (*(a+mid)==target) {
-      result = mid;
+      return mid;
     }else if(a[mid]<target){
       left=mid+1;
     } else if(a[mid]>target){
       right =mid-1;
     }
   }
-  result=-1;
-  return result;
+  return -1;
 }
 
 void swap(int *a, int *b) {

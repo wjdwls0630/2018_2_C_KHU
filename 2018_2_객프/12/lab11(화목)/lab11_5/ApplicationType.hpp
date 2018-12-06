@@ -18,13 +18,9 @@ public:
   int DeleteByPhotoName();  //  find  a  record  by  name  and  delete
   int RetrieveByEvent();    //  find  records  by  event
   int RetrieveByContents();  //  find  records  by  contents
-  void AddEventToList();
-  int SearchEventList();
-  void DisplayEventList();
-  void RetrieveFromEventList();
-  void DisplayEventPhotos();
+
 private:
-  vector<eventType> eventList;
+
   vector<RecordType> photoList;
   int length;
   string inFileName;
@@ -32,7 +28,7 @@ private:
 };
 
 ApplicationType::ApplicationType()
-:length(0),inFileName("lab10_4.txt"),outFileName("lab10_4.txt"){ photoList.clear();}
+:length(0),inFileName("lab11_5.txt"),outFileName("lab11_5.txt"){ photoList.clear();}
 
 
  // select a command and execute
@@ -180,19 +176,17 @@ int ApplicationType::BinarySearchByPrimaryKey(string inName){
   int left=0;
   int right=this->photoList.size()-1;
   int mid;
-  int result;
   while (left<=right) {
-    mid=left+(left+right)/2;
+    mid=left+(right-left)/2;
     if (this->photoList[mid].Compare(inName)==0) {
-      result = mid;
+      return mid;
     }else if(this->photoList[mid].Compare(inName)==-1){
       left=mid+1;
     } else if(this->photoList[mid].Compare(inName)==1){
       right =mid-1;
     }
   }
-  result=-1;
-  return result;
+  return -1;
 }
 
 // find records by photoname
