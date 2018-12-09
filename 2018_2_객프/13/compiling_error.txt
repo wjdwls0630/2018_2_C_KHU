@@ -1,5 +1,0 @@
-/Users/parkjungjin/C++/2018_2_객프/13/13_7.cpp:5:23: error: expected ';' at end of declaration
-  std::vector<int> vec {10, 20, 30, 40, 50};
-                      ^
-                      ;
-1 error generated.

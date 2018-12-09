@@ -35,7 +35,7 @@ void print_reverse(const std::vector<int>& v, int dec) {
     p-=dec;
     std::cout << *p << ' ';
   }
-  //end 는 begin과 가리키는 게 같다. 한바퀴 돌아서 다시 돌아온다고 생각
+  //end() 함수는 리스트의 끝 주소를 리턴하는데, 마지막 값보다 한 칸 뒤 위치의 값을 리턴합니다.
   std::cout  << '\n';
 
 }
