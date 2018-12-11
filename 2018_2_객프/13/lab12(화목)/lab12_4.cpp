@@ -34,6 +34,16 @@ template <typename T>void CList<T>::Add(T data){
           return;
         }
       }
+      for (int i = 0; i < this->m_Length; i++) {
+        if (data<this->m_Array[i]) {
+          for (int j = this->m_Length-1; j >=i; j--) {
+            this->m_Array[j+1]=this->m_Array[j];
+          }
+          this->m_Array[i]=data;
+          this->m_Length++;
+          return;
+        }
+      }
       this->m_Array[this->m_Length]=data;
       this->m_Length++;
     } else{
