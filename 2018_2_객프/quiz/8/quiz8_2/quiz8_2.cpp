@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <vector>
+#include <string>
 class Lecture {
 private:
   std::string lecture_name;
@@ -15,7 +16,7 @@ private:
   std::string major;
   int size;
   int lecture_count;
-  Lecture * lecture_list;
+  std::vector<Lecture> lecture_list;
   float GPA;
 
 public:
@@ -31,18 +32,11 @@ public:
 
 };
 
-Student::Student (const std::string &name, const int &id, const std::string &major,const int &lecture_count){
-  this->name=name;
-  this->id=id;
-  this->major=major;
-  this->size=0;
-  this->lecture_count=lecture_count;
-  this->lecture_list=new Lecture [lecture_count];
-  this->GPA=0;
+Student::Student (const std::string &name, const int &id, const std::string &major,const int &lecture_count)
+:name(name),id(id),major(major),size(0),lecture_count(lecture_count),GPA(0){
+  lecture_list.resize(this->lecture_count);
 }
-Student::Student::~Student(){
-  delete [] lecture_list;
-}
+Student::Student::~Student(){}
 
 void Student::print() {
   std::cout << name << '\n';
