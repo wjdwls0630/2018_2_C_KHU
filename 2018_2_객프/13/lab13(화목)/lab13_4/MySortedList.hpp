@@ -29,11 +29,11 @@ public:
   void ResetList();
   int GetNextItem(T& data) const ;
   T* GetNextItemPtr() const;
-  int Add(const T& data);
+  int Add(T& data);
   int Retrieve(T& data);
   T* RetrieveUsingBinarySearch(const T &item);
   int Delete(T &data);
-  int Replace(const T &data)
+  int Replace(const T &data);
 
 };
 //	*	default constructor.
@@ -106,7 +106,7 @@ template <typename T>T* SortedList<T>::GetNextItemPtr() const{
 *	@param	data	new data.
 *	@return	return 1 if this function works well, otherwise 0.
 */
-template <typename T>int SortedList<T>::Add(const T &data){
+template <typename T>int SortedList<T>::Add(T &data){
   //	Initialize list iterator.
   this->ResetList();
   T target;
@@ -152,7 +152,7 @@ template <typename T>int SortedList<T>::Add(const T &data){
 *           Return 1 for found, 0 for not found
 */
 template <typename T>int SortedList<T>::Retrieve(T& data){
-  T Data_Compare=*(this->GetNextItemPtr());
+  T* Data_Compare=*(this->GetNextItemPtr());
   while (Data_Compare!=NULL) {
     if (Data_Compare==data) {
       data=Data_Compare;

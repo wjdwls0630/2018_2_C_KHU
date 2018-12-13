@@ -1,10 +1,12 @@
-#pragma once
+#ifndef application_hpp
+#define application_hpp
 #include "list.hpp"
 #include "photoType.hpp"
 using namespace std;
+
 class Application {
 public:
-	Application(): outFileName("quiz7_3.txt"), inFileName("quiz7_3.txt") {}
+	Application();
 	void Run();
 	int GetCommand();
 	void AddPhoto();
@@ -21,7 +23,7 @@ private:
 	string inFileName; // input file ��
 	string outFileName; // output file ��
 };
-
+Application::Application(): outFileName("quiz7_3.txt"), inFileName("quiz7_3.txt") {}
 void Application::Run() {
 	int command;
 	while ((command = GetCommand())) {
@@ -30,24 +32,24 @@ void Application::Run() {
 		case  0:
 			return;
 		case 1:		// Read in a record and add to the list
-			AddPhoto();
+			this->AddPhoto();
 			break;
 		case 2:
 			DeletePhoto();
 			break;
-		case 3:	 
+		case 3:
 			FindPhoto();
 			break;
-		case 4:	 
+		case 4:
 			FindPhotoByEvent();
 			break;
-		case 5:		
+		case 5:
 			DisplayList();
 			break;
-		case 6:			
+		case 6:
 			ReadAllFromFile();
 			break;
-		case 7:			
+		case 7:
 			WriteAllToFile();
 			break;
 		default:
@@ -146,3 +148,5 @@ int Application::WriteAllToFile()
 	}
 	return 1;
 }
+
+#endif /* application_hpp */

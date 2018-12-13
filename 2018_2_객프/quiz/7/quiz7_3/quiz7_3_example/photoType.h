@@ -1,6 +1,9 @@
-#ifndef photoType_hpp
-#define photoType_hpp
-
+#pragma once
+#include<iostream>
+#include <string>
+#include <stdio.h>
+#include <fstream>
+#include <iomanip>
 using namespace std;
 
 class PhotoType {
@@ -23,10 +26,9 @@ public:
 	bool IsEqualEvent(string name) { // event name�� ����
 		if (eventName == name) return true;
 		else return false; 	}
-	//?? [�׸� 2-1] PhotoType ��ü�� primary key�� photoName�� �������� �����ϴ� equal operator(==)�� �������϶�.
-	bool operator<(PhotoType inItem);
-  bool operator>(PhotoType inItem);
-	bool operator==(PhotoType inItem);
+	bool operator==(PhotoType inItem) { // primary key�� photoName�� ����
+		if (photoName == inItem.photoName) return true;
+		else return false; 	}
 
 private:
 	string photoName; // ���� ��
@@ -76,9 +78,8 @@ bool PhotoType::ReadItemFromKB(){
 	cin.clear();  // clear flag
 	return 1;
 }
-bool PhotoType::operator<(PhotoType inItem){ return inItem.photoName<this->photoName; }
-bool PhotoType::operator>(PhotoType inItem){ return inItem.photoName<this->photoName; }
-bool PhotoType::operator==(PhotoType inItem){ return inItem.photoName==this->photoName;}
 
-
-#endif /* photoType_hpp */
+// �� PhotoType ��ü�� ȭ�鿡 ����
+void PhotoType::DisplayOnScreen() {
+	cout << "  " << setw(14) << photoName << setw(14) << eventName << setw(14) << contents << endl;
+}

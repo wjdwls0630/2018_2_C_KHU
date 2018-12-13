@@ -1,11 +1,11 @@
-#pragma once
+#ifndef list_hpp
+#define list_hpp
 
 #include <iostream>
 #include <string>
 using namespace std;
 
-
-#define MAXSIZE 3
+#define MAXSIZE 100
 
 // Generic list class
 template <typename T>
@@ -111,3 +111,4 @@ template<typename T>int List<T>::Delete(T data){
 		}
 	}
 }
+#endif /* list_hpp */

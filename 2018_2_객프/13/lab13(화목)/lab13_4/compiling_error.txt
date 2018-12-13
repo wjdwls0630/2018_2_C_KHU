@@ -1,0 +1,26 @@
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/lab13_4.cpp:11:
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/ApplicationType.hpp:3:
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/eventType.hpp:3:
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/MySortedList.hpp:6:
+/Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/Comparer.hpp:36:10: error: expected expression
+    comp=[](const T &a,const T &b)->bool{return a<b;};
+         ^
+/Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/Comparer.hpp:38:10: error: expected expression
+    comp=[](const T &a,const T &b)->bool{return a>b;};
+         ^
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/lab13_4.cpp:11:
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/ApplicationType.hpp:3:
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/eventType.hpp:3:
+/Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/MySortedList.hpp:36:29: error: expected ';' at end of declaration list
+  int Replace(const T &data)
+                            ^
+                            ;
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/lab13_4.cpp:11:
+In file included from /Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/ApplicationType.hpp:3:
+/Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/eventType.hpp:8:3: error: use of class template 'SortedList' requires template arguments
+  SortedList memPhotoList;
+  ^
+/Users/parkjungjin/C++/2018_2_객프/13/lab13(화목)/lab13_4/MySortedList.hpp:15:7: note: template is declared here
+class SortedList {
+      ^
+4 errors generated.

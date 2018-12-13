@@ -1,5 +1,7 @@
 #ifndef Application_hpp
 #define Application_hpp
+#include "eventType.hpp"
+#include "RecordType.hpp"
 
 using namespace std;
 
@@ -293,18 +295,20 @@ int ApplicationType::RetrieveByContents(){
 }
 
 int ApplicationType::AddEventToList(eventType &user_Event){
-  string *tempList;
-  tempList=new string[user_Event.GetNumOfPhoto()];
+  SortedList<string> tempList;
+  tempList.ResetList();
   int i;
+  string temp;
+
   for (i = 0; i < this->eventList.size(); i++) {
     if (this->eventList[i].GetEventName()==user_Event.GetEventName()) {
       user_Event.GetFileNameList(tempList);
-      this->eventList[i].AddFileName(*(tempList));
+      tempList.GetNextItem(temp);
+      this->eventList[i].AddFileName(temp);
       return 1;
     }
   }
   this->eventList.push_back(user_Event);
-  delete [] tempList;
   return 0;
 }
 int ApplicationType::SearchEventList(const string &inName){
@@ -318,22 +322,23 @@ int ApplicationType::SearchEventList(const string &inName){
   return -1;
 }
 void ApplicationType::DisplayEventList(){
-  string *tempList;
+  SortedList<string> tempList;
+  string temp;
+  tempList.ResetList();
   std::cout  << '\n';
   cout << "\t*********** [   Display Event List  ] ***********" << '\n';
   for (int i = 0; i < this->eventList.size(); i++) {
     std::cout << "\tEvent "<<i <<" : ";
     std::cout << this->eventList[i].GetEventName() << '\n';
-    tempList=new string [this->eventList[i].GetNumOfPhoto()];
     this->eventList[i].GetFileNameList(tempList);
     std::cout << "\tMembers : ";
     for (int j = 0; j < this->eventList[i].GetNumOfPhoto(); j++) {
+      tempList.GetNextItem(temp);
       cout.width(3);
-      std::cout <<left <<*(tempList+j)<< ' ';
+      std::cout <<left <<temp<< ' ';
     }
     std::cout << '\n';
     std::cout << '\n';
-    delete [] tempList;
   }
 
 }
@@ -350,16 +355,18 @@ int ApplicationType::RetrieveFromEventList(){
     return 0;
   } else {
     int photo_index;
-    string *tempList;
-    tempList=new string [this->eventList[event_index].GetNumOfPhoto()] ;
+    SortedList<string> tempList;
+    string temp;
+    tempList.ResetList();
     this->eventList[event_index].GetFileNameList(tempList);
     for (int i = 0; i < this->eventList[event_index].GetNumOfPhoto(); i++) {
-      photo_index=BinarySearchByPrimaryKey(*(tempList+i));
+      tempList.GetNextItem(temp);
+      photo_index=BinarySearchByPrimaryKey(temp);
       cout.width(15);
       cout <<left <<"\tRecord : ";
       this->photoList[photo_index].DisplayOnScreen();
     }
-    delete [] tempList;
+
 
     return 1;
   }
@@ -377,17 +384,17 @@ void ApplicationType::DisplayEventPhotos(){
     return ;
   } else {
     int photo_index;
-    string *tempList;
-    tempList=new string [this->eventList[event_index].GetNumOfPhoto()] ;
-
+    SortedList<string> tempList;
+    string temp;
+    tempList.ResetList();
     this->eventList[event_index].GetFileNameList(tempList);
     for (int i = 0; i < this->eventList[event_index].GetNumOfPhoto(); i++) {
-      photo_index=BinarySearchByPrimaryKey(*(tempList+i));
+      tempList.GetNextItem(temp);
+      photo_index=BinarySearchByPrimaryKey(temp);
       cout.width(15);
       cout <<left <<"\tRecord : ";
       this->photoList[photo_index].DisplayOnScreen();
     }
-    delete [] tempList;
     return ;
   }
 }
