@@ -2,7 +2,6 @@
 
 int main() {
   int sum=0,number=0;
-
   while (1) {
     sum+=number;
     number++;

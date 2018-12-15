@@ -20,7 +20,5 @@ int main() {
     }
   }
   printf("비밀번호가 일치합니다!\n" );
-
-
   return 0;
 }

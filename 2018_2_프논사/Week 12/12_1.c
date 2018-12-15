@@ -5,6 +5,5 @@ int main() {
   for (int i = 0; i < 3; i++) {
     printf("a[%d] = %d\n",i,a[i] );
   }
-
   return 0;
 }

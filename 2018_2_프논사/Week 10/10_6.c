@@ -7,7 +7,6 @@ int main() {
       break;
     }
   }
-
   printf("\nfor문을 빠져나왔습니다.\n" );
   return 0;
 }

@@ -12,6 +12,5 @@ int main() {
     printf("%d번 학생의 평균은 %.2lf이다.\n",i+1,avg[i]);
     sum=0;
   }
-
   return 0;
 }

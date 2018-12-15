@@ -10,6 +10,5 @@ int main() {
     }
   }
   printf("\n최대값은 %d 이다.",target );
-
   return 0;
 }

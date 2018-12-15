@@ -1,5 +1,6 @@
 #ifndef application_hpp
 #define application_hpp
+#include <iomanip>
 #include "list.hpp"
 #include "photoType.hpp"
 using namespace std;
@@ -8,15 +9,14 @@ class Application {
 public:
 	Application();
 	void Run();
-	int GetCommand();
 	void AddPhoto();
 	void DeletePhoto();
 	void FindPhoto();
 	void FindPhotoByEvent();
 	void DisplayList();
-
+	int GetCommand();
 	int ReadAllFromFile();  // read all the records in file and store in vector arrays
-	int WriteAllToFile(); // write all photo records to disk.
+	int WriteAllToFile();// write all photo records to disk.
 
 private:
 	List<PhotoType> master;
@@ -35,22 +35,22 @@ void Application::Run() {
 			this->AddPhoto();
 			break;
 		case 2:
-			DeletePhoto();
+			this->DeletePhoto();
 			break;
 		case 3:
-			FindPhoto();
+			this->FindPhoto();
 			break;
 		case 4:
-			FindPhotoByEvent();
+			this->FindPhotoByEvent();
 			break;
 		case 5:
-			DisplayList();
+			this->DisplayList();
 			break;
 		case 6:
-			ReadAllFromFile();
+			this->ReadAllFromFile();
 			break;
 		case 7:
-			WriteAllToFile();
+			this->WriteAllToFile();
 			break;
 		default:
 			cout << "Invalid operation \n";
@@ -59,9 +59,52 @@ void Application::Run() {
 	}
 }
 
+void Application::AddPhoto(){
+	PhotoType tRecord;
+	if (tRecord.ReadItemFromKB()==1) {
+		this->master.Add(tRecord);
+	}
+}
+void Application::DeletePhoto(){
+	std::string inPhotoName;
+	std::cout << "\t 삭제할 사진 명 입력 --> ";
+	std::cin >> inPhotoName;
+	PhotoType tRecord(inPhotoName);
+	this->master.Delete(tRecord);
+}
+void Application::FindPhoto(){
+	std::string inPhotoName;
+	std::cout << "\t 찾고자 하는 사진 명 입력 --> ";
+	std::cin >> inPhotoName;
+	PhotoType tRecord;
+	tRecord.SetPhotoName(inPhotoName);
+	this->master.Retrieve(tRecord);
+	std::cout << "검색된 사진 정보 ";
+	tRecord.DisplayOnScreen();
+}
+void Application::FindPhotoByEvent(){
+	std::string inEventName;
+	std::cout << "\t 찾고자 하는 이벤트 명 입력 --> ";
+	std::cin >> inEventName;
+	cout << "\t" << "  " << setw(14) << "[사진 명]" << setw(14) << "[이벤트명]" << setw(14) << "[사진 설명]" << endl;
+
+
+	PhotoType tRecord;
+	PhotoType compare;
+	tRecord.SetEventName(inEventName);
+	int i = 0;
+	this->master.ResetList();
+	while (this->master.GetNextItem(compare)!=0) {
+		if (compare.GetEventName()==tRecord.GetEventName()) {
+			cout << "\t";
+			compare.DisplayOnScreen();
+			i++;
+		}
+	}
+}
+
 // display menu, select a command, return ID of the command
-int Application::GetCommand()
-{
+int Application::GetCommand(){
 	int temp;
 	while (1)
 	{
@@ -94,7 +137,7 @@ int Application::GetCommand()
 // ����Ʈ�� ������ ���� ���� ������ ȭ�鿡 ����
 void Application::DisplayList() {
 	cout << "\t ***  사진 리스트 화면 출력  ***\n";
-	cout << "\t" << "  " << setw(14) << "[사진 명]" << setw(14) << "[이벤트명]" << setw(14) << "[사진 설]" << endl;
+	cout << "\t" << "  " << setw(14) << "[사진 명]" << setw(14) << "[이벤트명]" << setw(14) << "[사진 설명]" << endl;
 	PhotoType tRecord;
 	int i = 0;
 	master.ResetList();

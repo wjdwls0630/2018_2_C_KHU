@@ -76,8 +76,12 @@ bool PhotoType::ReadItemFromKB(){
 	cin.clear();  // clear flag
 	return 1;
 }
-bool PhotoType::operator<(PhotoType inItem){ return inItem.photoName<this->photoName; }
-bool PhotoType::operator>(PhotoType inItem){ return inItem.photoName<this->photoName; }
+void PhotoType::DisplayOnScreen(){
+	std::cout << "\t" << "  " << setw(14) << this->photoName << setw(14) << this->eventName << setw(14) << this->contents << endl;
+
+}
+bool PhotoType::operator<(PhotoType inItem){ return this->photoName<inItem.photoName; }
+bool PhotoType::operator>(PhotoType inItem){ return this->photoName>inItem.photoName; }
 bool PhotoType::operator==(PhotoType inItem){ return inItem.photoName==this->photoName;}
 
 

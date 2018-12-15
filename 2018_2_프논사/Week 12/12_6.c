@@ -18,6 +18,5 @@ int main() {
     }
     sum=0;
   }
-
   return 0;
 }

@@ -8,7 +8,6 @@ int main() {
     sum+=A[i];
   }
   average=(double)sum/5;
-
   printf("배열 A 원소의 합은 %d다.\n",sum );
   printf("배열 A 원소의 평균은 %4.2lf이다.\n", average);
   return 0;

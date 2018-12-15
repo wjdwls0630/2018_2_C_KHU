@@ -5,7 +5,6 @@ int main() {
   int Sum;
   Sum=SumArray(a,5);
   printf("배열 원소의 합 : %d\n",Sum );
-
   return 0;
 }
 int SumArray(int a[], int size) {

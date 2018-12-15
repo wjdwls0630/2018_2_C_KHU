@@ -1,8 +1,6 @@
 #ifndef list_hpp
 #define list_hpp
 
-#include <iostream>
-#include <string>
 using namespace std;
 
 #define MAXSIZE 100
@@ -89,7 +87,6 @@ template<typename T>int List<T>::Retrieve(T& data){
 			return 1;
 		}
 	}
-	std::cout << "\t해당 정보가 없습니다" << '\n';
 	return 0;
 }
 template<typename T>int List<T>::Delete(T data){
@@ -102,7 +99,8 @@ template<typename T>int List<T>::Delete(T data){
 			for (int j = this->curIndx; j < this->m_Length-1; j++) {
 				this->m_Array[j]=this->m_Array[j+1];
 			}
-			this->m_Array[this->m_Length-1]=0;
+			T temp;
+			this->m_Array[this->m_Length-1]=temp;
 			this->m_Length--;
 			return 1;
 		}else {

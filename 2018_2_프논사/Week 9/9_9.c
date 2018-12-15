@@ -2,7 +2,6 @@
 
 int main() {
   int j;
-
   int count=0;
   for (int i = 2; i <= 100; i++) {
     for (j = 2; i%j; j++);

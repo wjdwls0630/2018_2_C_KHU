@@ -9,7 +9,6 @@ int main() {
 
   } while(sum<100);
 
-
   printf("누적합 : %d  배수 : %d\n",sum,number);
   return 0;
 }
