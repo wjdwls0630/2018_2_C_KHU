@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <stdio.h>
 #include <fstream>
-#include <vector>
 
 
 #include "ApplicationType.hpp"

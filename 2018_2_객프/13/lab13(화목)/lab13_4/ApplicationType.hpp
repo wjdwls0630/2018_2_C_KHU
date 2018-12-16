@@ -15,19 +15,19 @@ public:
   int WriteAllToFile(); // write all photo records to disk.
   void DisplayAllOnScreen(); // write all the record in the list on the screeen
   int SearchByPrimaryKey(string inName); // Search a record by file name and return index of the record.
-  int BinarySearchByPrimaryKey(string inName);// Search a record by file name and return index of the record.
+  RecordType* BinarySearchByPrimaryKey(string inName);// Search a record by file name and return index of the record.
   int RetrieveByPhotoName(); // find records by photoname
   int DeleteByPhotoName();  //  find  a  record  by  name  and  delete
   int RetrieveByEvent();    //  find  records  by  event
   int RetrieveByContents();  //  find  records  by  contents
   int AddEventToList(eventType &user_Event);
-  int SearchEventList(const string &inName);
+  eventType * SearchEventList(const string &inName);
   void DisplayEventList();
   int RetrieveFromEventList();
   void DisplayEventPhotos();
 private:
-  vector<eventType> eventList;
-  vector<RecordType> photoList;
+  SortedList<eventType> eventList;
+  SortedList<RecordType> photoList;
   int length;
   string inFileName;
   string outFileName;
@@ -35,8 +35,8 @@ private:
 
 ApplicationType::ApplicationType()
 :length(0),inFileName("lab12_5.txt"),outFileName("lab12_5.txt"){
-  photoList.clear();
-  eventList.clear();
+  this->photoList.MakeEmpty();
+  this->eventList.MakeEmpty();
 }
 
 
@@ -125,34 +125,26 @@ int ApplicationType::AddRecordToList(){
   user_Record.ReadPhotoNameFromKB();
   user_Record.ReadEventNameFromKB();
   user_Record.ReadRecordFromKB();
-  string target=user_Record.getPName();
-  int insert_index=0;
-  for (int i = 0; i < this->photoList.size(); i++) {
-    if (this->photoList[i].Compare(target)==1) {
-      insert_index=i;
-      break;
-    }
-    insert_index++;
-  }
-  this->photoList.insert(photoList.begin()+insert_index,user_Record);
-
-  eventType user_Event(user_Record.getEName(),user_Record.getPName());
+  this->photoList.Add(user_Record);
+  std::string eventName=user_Record.getEName();
+  std::string photoName=user_Record.getPName()
+  eventType user_Event(eventName,photoName);
   this->AddEventToList(user_Event);
-
-
   return 1;
 }
 
 // read all the records in file and store in vector arrays
 int ApplicationType::ReadAllFromFile(){
   ifstream inFile(this->inFileName);
+  RecordType tRecord;
   int result=1;
   int i=0;
   while (inFile) {
     if (result==0) {
       return result;
     }
-    result=this->photoList[i].ReadRecordFromFile(inFile);
+    tRecord.ReadRecordFromFile(inFile);
+    result=this->photoList.Add(tRecord);
     i++;
   }
   inFile.close();
@@ -163,8 +155,11 @@ int ApplicationType::ReadAllFromFile(){
 // write all photo records to disk.
 int ApplicationType::WriteAllToFile(){
   ofstream outFile(this->outFileName);
-  for (int i = 0; i < this->photoList.size(); i++) {
-    this->photoList[i].WriteRecordToFile(outFile);
+  RecordType tRecord;
+  this->photoList.ResetList();
+  for (int i = 0; i < this->photoList.GetLength(); i++) {
+    this->photoList.GetNextItem(tRecord);
+    tRecord.WriteRecordToFile(outFile);
   }
   outFile.close();
   cout << "\t****   [   Writing to disk is completed   ]   ****" << endl;
@@ -173,19 +168,25 @@ int ApplicationType::WriteAllToFile(){
 }
 
 void ApplicationType::DisplayAllOnScreen(){
+  RecordType tRecord;
+  this->photoList.ResetList();
   std::cout  << '\n';
   cout << "\t**********   [   Display on screen   ]   **********" << endl;
-  for (int i = 0; i < this->photoList.size(); i++) {
+  for (int i = 0; i < this->photoList.GetLength(); i++) {
     std::cout << "\tRecord "<<i <<" : ";
-    this->photoList[i].DisplayOnScreen();
+    this->photoList.GetNextItem(tRecord);
+    tRecord.DisplayOnScreen();
   }
 }
 
 // Search a record by file name and return index of the record.
 int ApplicationType::SearchByPrimaryKey(string inName){
+  RecordType tRecord;
+  this->photoList.ResetList();
   int index=0;
-  for (int i = 0; i < this->photoList.size(); i++) {
-    if(this->photoList[i].IsEqual(inName)){
+  for (int i = 0; i < this->photoList.GetLength(); i++) {
+    this->photoList.GetNextItem(tRecord);
+    if(tRecord.IsEqual(inName)){
       index=i;
       return index;
     }
@@ -194,21 +195,13 @@ int ApplicationType::SearchByPrimaryKey(string inName){
 }
 
 // Search a record by file name and return index of the record.
-int ApplicationType::BinarySearchByPrimaryKey(string inName){
-  int left=0;
-  int right=this->photoList.size()-1;
-  int mid;
-  while (left<=right) {
-    mid=left+(right-left)/2;
-    if (this->photoList[mid].Compare(inName)==0) {
-      return mid;
-    }else if(this->photoList[mid].Compare(inName)==-1){
-      left=mid+1;
-    } else if(this->photoList[mid].Compare(inName)==1){
-      right =mid-1;
-    }
-  }
-  return -1;
+RecordType* ApplicationType::BinarySearchByPrimaryKey(string inName){
+  RecordType findRecord;
+  findRecord.setPName(inName);
+  RecordType *tRecord;
+  this->photoList.ResetList();
+  tRecord=this->photoList.RetrieveUsingBinarySearch(findRecord);
+  return tRecord;
 }
 
 // find records by photoname
@@ -219,47 +212,45 @@ int ApplicationType::RetrieveByPhotoName(){
   cout.width(40);
   cout <<left << "\tEnter a Photo name to search --> ";
   cin >> inName;
-  int index = BinarySearchByPrimaryKey(inName);
-  if (index==-1){
+  RecordType* tRecord = BinarySearchByPrimaryKey(inName);
+  int index=SearchByPrimaryKey(inName);
+  if (tRecord==NULL){
     cout << "\tNo such file information" << '\n';
     return 0;
   } else {
     cout.width(15);
     cout <<left <<"\tRecord "<<index <<" : ";
-    this->photoList[index].DisplayOnScreen();
+    tRecord->DisplayOnScreen();
     return 1;
   }
 }
 
 //  find  a  record  by  name  and  delete
 int ApplicationType::DeleteByPhotoName(){
+  RecordType *tRecord;
   std::string inName="";
   std::cout<< '\n';
   cout<< "\t*********** [  Delete record by name  ] ***********" << '\n';
   std::cout << "\tEnter a Photo name to erase --> ";
   std::cin >> inName;
-  int index=BinarySearchByPrimaryKey(inName);
-  if (index==-1) {
-    cout << "\tNo such file information" << '\n';
-    return 0;
-  }else {
-    this->photoList.erase(this->photoList.begin()+index);
-    return 1;
-  }
+  tRecord=BinarySearchByPrimaryKey(inName);
+  this->photoList.Delete(*tRecord);
 }
 
 //  find  records  by  event
 int ApplicationType::RetrieveByEvent(){
+  RecordType tRecord;
   string inName = "";
   cout << "\t************ [   Find by EventName  ] ************" << '\n';
   cout.width(40);
   cout <<left << "\tEnter a Event name to search --> ";
   cin >> inName;
   int count=0;
-  for (int i = 0; i < this->photoList.size(); i++) {
-    if (this->photoList[i].IsEqualEvent(inName)){
+  for (int i = 0; i < this->photoList.GetLength(); i++) {
+    this->photoList.GetNextItem(tRecord);
+    if (tRecord.IsEqualEvent(inName)){
       cout << "\tRecords " << i << "  :   ";
-      this->photoList[i].DisplayOnScreen();
+      tRecord.DisplayOnScreen();
       count++;
     }
   }
@@ -273,16 +264,18 @@ int ApplicationType::RetrieveByEvent(){
 
 //  find  records  by  contents
 int ApplicationType::RetrieveByContents(){
+  RecordType tRecord;
   string inName = "";
   cout << "\t************ [   Find by Contents  ] ************" << '\n';
   cout.width(40);
   cout <<left << "\tEnter a key in Contents      --> ";
   cin >> inName;
   int count=0;
-  for (int i = 0; i < this->photoList.size(); i++) {
-    if (this->photoList[i].IsContentsIncluded(inName)){
+  for (int i = 0; i < this->photoList.GetLength(); i++) {
+    this->photoList.GetNextItem(tRecord);
+    if (tRecord.IsContentsIncluded(inName)){
       cout << "\tRecords " << i << "  :   ";
-      this->photoList[i].DisplayOnScreen();
+      tRecord.DisplayOnScreen();
       count++;
     }
   }
@@ -296,43 +289,45 @@ int ApplicationType::RetrieveByContents(){
 
 int ApplicationType::AddEventToList(eventType &user_Event){
   SortedList<string> tempList;
-  tempList.ResetList();
-  int i;
+  eventType *tEvent;
   string temp;
-
-  for (i = 0; i < this->eventList.size(); i++) {
-    if (this->eventList[i].GetEventName()==user_Event.GetEventName()) {
+  tempList.ResetList();
+  for (int i = 0; i < this->eventList.GetLength(); i++) {
+    tEvent=eventList.GetNextItemPtr();
+    if (tEvent->GetEventName()==user_Event.GetEventName()) {
       user_Event.GetFileNameList(tempList);
       tempList.GetNextItem(temp);
-      this->eventList[i].AddFileName(temp);
+      tEvent->AddFileName(temp);
       return 1;
     }
   }
-  this->eventList.push_back(user_Event);
+  this->eventList.Add(user_Event);
   return 0;
 }
-int ApplicationType::SearchEventList(const string &inName){
-  int index;
-  for ( int i = 0; i < this->eventList.size(); i++) {
-    if (this->eventList[i].GetEventName()==inName) {
-      index=i;
-      return index;
+eventType *ApplicationType::SearchEventList(const string &inName){
+  eventType *tEvent;
+  for (int i = 0; i < this->eventList.GetLength(); i++) {
+    this->eventList.GetNextItem(*tEvent);
+    if (tEvent->GetEventName()==inName) {
+      return tEvent;
     }
   }
-  return -1;
+  return NULL;
 }
 void ApplicationType::DisplayEventList(){
   SortedList<string> tempList;
   string temp;
+  eventType tEvent;
   tempList.ResetList();
   std::cout  << '\n';
   cout << "\t*********** [   Display Event List  ] ***********" << '\n';
-  for (int i = 0; i < this->eventList.size(); i++) {
+  for (int i = 0; i < this->eventList.GetLength(); i++) {
+    this->eventList.GetNextItem(tEvent);
     std::cout << "\tEvent "<<i <<" : ";
-    std::cout << this->eventList[i].GetEventName() << '\n';
-    this->eventList[i].GetFileNameList(tempList);
+    std::cout << tEvent.GetEventName() << '\n';
+    tEvent.GetFileNameList(tempList);
     std::cout << "\tMembers : ";
-    for (int j = 0; j < this->eventList[i].GetNumOfPhoto(); j++) {
+    for (int j = 0; j < tEvent.GetNumOfPhoto(); j++) {
       tempList.GetNextItem(temp);
       cout.width(3);
       std::cout <<left <<temp<< ' ';
@@ -349,22 +344,22 @@ int ApplicationType::RetrieveFromEventList(){
   cout.width(40);
   cout <<left << "\tEnter Event name to search --> ";
   cin >> inName;
-  int event_index = SearchEventList(inName);
-  if (event_index==-1){
+  eventType * tEvent = SearchEventList(inName);
+  if (tEvent==NULL){
     cout << "\tNo such file information" << '\n';
     return 0;
   } else {
-    int photo_index;
+    RecordType * tRecord;
     SortedList<string> tempList;
     string temp;
     tempList.ResetList();
-    this->eventList[event_index].GetFileNameList(tempList);
-    for (int i = 0; i < this->eventList[event_index].GetNumOfPhoto(); i++) {
+    tEvent->GetFileNameList(tempList);
+    for (int i = 0; i < tEvent->GetNumOfPhoto(); i++) {
       tempList.GetNextItem(temp);
-      photo_index=BinarySearchByPrimaryKey(temp);
+      tRecord=BinarySearchByPrimaryKey(temp);
       cout.width(15);
       cout <<left <<"\tRecord : ";
-      this->photoList[photo_index].DisplayOnScreen();
+      tRecord->DisplayOnScreen();
     }
 
 
@@ -378,22 +373,22 @@ void ApplicationType::DisplayEventPhotos(){
   cout.width(40);
   cout <<left << "\tEnter Event name to search --> ";
   cin >> inName;
-  int event_index = SearchEventList(inName);
-  if (event_index==-1){
+  eventType * tEvent = SearchEventList(inName);
+  if (tEvent==NULL){
     cout << "\tNo such file information" << '\n';
     return ;
   } else {
-    int photo_index;
+    RecordType * tRecord;
     SortedList<string> tempList;
     string temp;
     tempList.ResetList();
-    this->eventList[event_index].GetFileNameList(tempList);
-    for (int i = 0; i < this->eventList[event_index].GetNumOfPhoto(); i++) {
+    tEvent->GetFileNameList(tempList);
+    for (int i = 0; i < tEvent->GetNumOfPhoto(); i++) {
       tempList.GetNextItem(temp);
-      photo_index=BinarySearchByPrimaryKey(temp);
+      tRecord=BinarySearchByPrimaryKey(temp);
       cout.width(15);
       cout <<left <<"\tRecord : ";
-      this->photoList[photo_index].DisplayOnScreen();
+      tRecord->DisplayOnScreen();
     }
     return ;
   }

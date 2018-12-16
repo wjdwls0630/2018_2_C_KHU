@@ -9,15 +9,15 @@ private:
   int numOfphoto;
 
 public:
-  eventType (const string &eventName, string &photoName);
+  eventType();
+  eventType (string &eventName, string &photoName);
   string GetEventName() const;
   void GetFileNameList(SortedList<string> &tempList);
   void AddFileName(string &photoName);
   int GetNumOfPhoto() const;
-
-
 };
-eventType::eventType (const string &eventName, string &photoName) : eventName(eventName),numOfphoto(1){
+eventType::eventType():eventName(""),numOfphoto(0){}
+eventType::eventType (string &eventName, string &photoName) : eventName(eventName),numOfphoto(1){
   this->memPhotoList.Add(photoName);
 }
 string eventType::GetEventName() const{ return this->eventName ; }

@@ -152,6 +152,7 @@ template <typename T>int SortedList<T>::Add(T &data){
 *           Return 1 for found, 0 for not found
 */
 template <typename T>int SortedList<T>::Retrieve(T& data){
+  this->ResetList();
   T* Data_Compare=*(this->GetNextItemPtr());
   while (Data_Compare!=NULL) {
     if (Data_Compare==data) {

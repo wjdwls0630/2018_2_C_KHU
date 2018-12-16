@@ -5,8 +5,10 @@ using namespace std;
 
 class RecordType {
 public:
-  string getPName() const;
-  string getEName() const;
+  string getPName() ;
+  string getEName() ;
+  void setPName(const std::string &photoName);
+  void setEName(const std::string &eventName);
   int ReadPhotoNameFromKB(); // read photo name from keyboard
   void GenFileName(string& name); //generate an unique file name using the current time.
   int ReadEventNameFromKB(); // read event name from Keyboard
@@ -27,8 +29,10 @@ private:
   int size;
   string contents;
 };
-string RecordType::getPName() const{ return this->photoName; }
-string RecordType::getEName() const{ return this->eventName; }
+string RecordType::getPName() { return this->photoName; }
+string RecordType::getEName() { return this->eventName; }
+void RecordType::setPName(const std::string &photoName){ this->photoName=photoName;}
+void RecordType::setEName(const std::string &eventName){ this->eventName=eventName;}
 
 // read photo name from keyboard
 int RecordType::ReadPhotoNameFromKB(){
