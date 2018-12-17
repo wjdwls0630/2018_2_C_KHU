@@ -1,5 +1,0 @@
-/Users/parkjungjin/C++/2018_2_객프/score/main.cpp:81:30: error: a space is required between consecutive right angle brackets (use '> >')
-  std::vector<std::vector<int>> database(7,std::vector<int>());
-                             ^~
-                             > >
-1 error generated.

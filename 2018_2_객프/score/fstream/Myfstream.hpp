@@ -1,0 +1,21 @@
+#ifndef Myfstream_hpp
+#define Myfstream_hpp
+
+class Myfstream : public std::fstream {
+private:
+  std::string filename;
+public:
+  Myfstream (const std::string &fName);
+  virtual ~Myfstream ();
+  std::string getFileName() const;
+  virtual close()=0;
+};
+
+Myfstream::Myfstream (const std::string &fName):filename(fName){}
+Myfstream::~Myfstream(){}
+
+std::string Myfstream::getFileName() const{ return this->filename;}
+
+
+
+#endif /* Myfstream_hpp */
