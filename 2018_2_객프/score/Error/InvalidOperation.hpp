@@ -5,7 +5,7 @@ class InvalidOperation : public std::exception {
 private:
   std::string message;
 public:
-  InvalidOperation ():message("Invalid Operation"){}
+  InvalidOperation ():message("\tInvalid Operation"){}
   virtual const char * what() const throw(){ return message.c_str(); }
 };
 

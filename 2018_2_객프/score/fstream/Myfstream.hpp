@@ -1,5 +1,6 @@
 #ifndef Myfstream_hpp
 #define Myfstream_hpp
+#include <fstream>
 
 class Myfstream : public std::fstream {
 private:
@@ -8,7 +9,7 @@ public:
   Myfstream (const std::string &fName);
   virtual ~Myfstream ();
   std::string getFileName() const;
-  virtual close()=0;
+  virtual void close()=0;
 };
 
 Myfstream::Myfstream (const std::string &fName):filename(fName){}

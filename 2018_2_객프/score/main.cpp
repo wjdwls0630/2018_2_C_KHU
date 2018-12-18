@@ -1,7 +1,12 @@
-#include "Application.hpp"
+#include <iostream>
+#include "./Application/Application.hpp"
 
 int main() {
-  Application App;
-  App.Run();
+  try{
+    Application App;
+    App.Run();
+  } catch(std::exception &ex){
+    std::cout << ex.what() << '\n';
+  }
   return 0;
 }
