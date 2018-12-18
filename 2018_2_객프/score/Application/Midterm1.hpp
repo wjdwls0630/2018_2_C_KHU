@@ -15,5 +15,7 @@ void Midterm1::printInfo(){
   std::cout << '\n' << '\n';
   std::cout << "\t----  MidTerm1 Test --------------------" << '\n';
   Score::printInfo();
+  std::cout << "\t|        Total Score : "<<this->GetTotal()<<"              |" << '\n';
+  std::cout << "\t----------------------------------------" << '\n';
 }
 #endif /* Score_hpp */

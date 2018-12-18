@@ -9,7 +9,7 @@ private:
 public:
   Myifstream (const std::string &fName);
   virtual ~Myifstream ();
-  int ReadLine(std::string &id,int &prob1, int &prob2, int&prob3 );
+  int ReadLine(const int& num,std::string &id,int &prob1, int &prob2, int&prob3 , int&prob4);
   void close() override ;
 };
 
@@ -21,9 +21,17 @@ Myifstream::Myifstream (const std::string &fName):Myfstream(fName){
   }
 }
 Myifstream::~Myifstream (){this->ifs.close();}
-int Myifstream::ReadLine(std::string &id,int &prob1, int &prob2, int&prob3 ){
+int Myifstream::ReadLine(const int& num,std::string &id,int &prob1, int &prob2, int&prob3, int&prob4 ){
   if (this->ifs) {
-    this->ifs>>id>>prob1>>prob2>>prob3;
+    if (num==1) {
+      this->ifs>>id>>prob1;
+    } else if(num==2){
+      this->ifs>>id>>prob1>>prob2;
+    } else if (num==3) {
+      this->ifs>>id>>prob1>>prob2>>prob3;
+    } else if(num==4){
+      this->ifs>>id>>prob1>>prob2>>prob3>>prob4;
+    }
     return 1;
   }
   return 0;

@@ -9,17 +9,19 @@ private:
   std::string ID;
   std::vector<Score*> Score_List;
   int Rank;
+  float PropTotal;
 public:
   Student();
   Student (const std::string &id);
   virtual ~Student(){this->Score_List.clear();}
   void SetID(const std::string &inID);
   std::string GetID() const;
-  //int GetSize(){ return this->Score_List.size();}
   void SetScore(Score* score);
   Score * GetScore(const std::string &testname);
   std::string ShowScore(const int & num);
   void ShowAll();
+  void CalculatePropTotal();
+  float GetPropTotal() const;
   void SetRank(const int&rank);
   int GetRank() const;
   Student & operator =(const Student &student);
@@ -54,6 +56,8 @@ Score * Student::GetScore(const std::string &testname){
     result= this->Score_List[2];
   } else if(testname=="Quiz"){
     result= this->Score_List[3];
+  } else if(testname=="Total"){
+    result= this->Score_List[4];
   }
   return result;
 }
@@ -63,15 +67,25 @@ std::string Student::ShowScore(const int & num) {
 }
 
 void Student::ShowAll(){
-  std::cout << "ID : " <<this->ID <<'\n';
   std::for_each(std::begin(this->Score_List),std::end(this->Score_List),[](Score * x)->void{x->printInfo();});
-  /*
-  for (int i = 0; i < this->Score_List.size(); i++) {
-    this->Score_List[i]->printInfo();
-  }
-  */
+  this->CalculatePropTotal();
+  std::cout << "\t{ Mid1 : 25%  Mid2 : 25%  Final : 25%  Quiz : 30% }" << '\n';
+  std::cout << "\tPropTotal Score : " <<this->PropTotal <<'\n';
 }
-
+void Student::CalculatePropTotal(){
+  if(this->Score_List.size()!=0){
+    for (int i = 0; i < this->Score_List.size(); i++) {
+      if (this->Score_List[i]->WhatIs()=="Quiz") {
+        this->PropTotal+=this->Score_List[i]->GetTotal()*0.3;
+      } else{
+        this->PropTotal+=this->Score_List[i]->GetTotal()*0.25;
+      }
+    }
+  } else{
+    std::cout << "\tNo data in Score_List" << '\n';
+  }
+}
+float Student::GetPropTotal() const{ return this->PropTotal; }
 void Student::SetRank(const int&rank){ this->Rank=rank;}
 int Student::GetRank() const{ return this->Rank;}
 

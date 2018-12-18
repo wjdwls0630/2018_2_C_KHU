@@ -14,5 +14,7 @@ std::string Quiz::WhatIs(){ return "Quiz" ; }
 void Quiz::printInfo(){
   std::cout << "\t----  Quiz -----------------------------" << '\n';
   Score::printInfo();
+  std::cout << "\t|        Total Score : "<<this->GetTotal()<<"              |" << '\n';
+  std::cout << "\t----------------------------------------" << '\n';
 }
 #endif /* Quiz_hpp */
