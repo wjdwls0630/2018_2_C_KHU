@@ -31,9 +31,12 @@ std::list<type> 리스트명
 즉 .at, []은 불가능하고 양방향 반복자 ++, --로만 접근 가능
 위의 벡터 함수 모두 사용 가능 (임의의 인덱스 접근 제외)
 대신 객체 자체의 sort 함수 있음
-sort() 를 오름 차순 정
+sort() default 오름차순)
+sort(greater<type>()) 내림차순
 lt.reverse()리스트 역으로 뒤집음
-
+lt.remove(k) k같은 원소 제거
+lt2.merge(lt1) lt2에 lt1을 합친후 오름차순 정렬
+lt2.merge(lt1,greater<type>) lt2에 lt1을 합친후 내림차순 정렬
 
 배열의 동적할당은
 
@@ -148,3 +151,9 @@ std::transform(시작순서, 끝순서 ,람다함수)
 transform을 적용할 람다함수는 변환한 값을 채울 리턴값을 내놔야한다..
 std::sort(시작순서,끝순서,greater<type>());(내림차순 정렬)
 std::sort(시작순서,끝순서);(오름차순 정렬)
+
+
+lldb
+r - run 실행
+l - list 현재 위치에서 소스 파일 내용 7줄 보여줌. 여러번 다면 그 다음 줄들을 계속 보여준다.
+p - prin

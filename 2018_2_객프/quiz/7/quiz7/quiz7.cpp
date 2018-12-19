@@ -95,6 +95,7 @@ int main(){
   int triangle_element[3] = {1, 2, 3};
   figure* a = new triangle(triangle_element);
   a->print();
+  std::cout << '\n';
 
   int square_element[4] = {1, 2, 3, 4};
   figure* b = new square(square_element);
