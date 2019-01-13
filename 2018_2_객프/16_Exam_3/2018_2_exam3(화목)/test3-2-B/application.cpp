@@ -10,8 +10,24 @@
 //          존재하지 않으면 새로운 event 항목을 만들에 사진 키를 추가하여 event list에 추가.
 // event항목에 새 사진키 입력은 EventType 멤버 함수 AddPhotoKey(photoKey)를 사용한다.
 int Application::AddPhotoToList(PhotoType item) {
-   //????
-   return 0;// 코드와 무관
+  EventType *tEvent;
+  if (this->master.Retrieve(item)==-1) {
+    this->master.Add(item);
+    this->eventList.ResetList();
+    for (int i = 0; i < this->eventList.GetLength(); i++) {
+      tEvent=this->eventList.GetNextItemPtr();
+      if (tEvent->GetEventName()==item.GetEventName()) {
+        tEvent->AddPhotoKey(item.GetPhotoName());
+        return 1;
+      }
+    }
+    EventType user_Event(item.GetEventName());
+    user_Event.AddPhotoKey(item.GetPhotoName());
+    this->eventList.Add(user_Event);
+    return 1;
+  }
+  std::cout << "\tPhoto already exists!" << '\n';
+  return 0;// 코드와 무관
 }
 
 
@@ -21,9 +37,9 @@ void Application::AddPhoto() {
   cout <<"\t*********   [   Add a Record to list   ]   *********" << endl;
    PhotoType temp;
    if (!temp.ReadItemFromKB()) return;
-   master.Add(temp);
+   //master.Add(temp);
    //?????[문제 3-2-B-i] 위 master.Add()를 지우고 아랫 명령을 활성화
-   //AddPhotoToList(temp);
+   AddPhotoToList(temp);
 
 }
 
@@ -39,7 +55,7 @@ void Application::DeletePhoto() {
    PhotoType tRecord;
    tRecord.SetPhotoName(inName);
    master.Delete(tRecord);
-  }
+   }
 
 
 //?????[문제 3-2-A-v] 아래 DisplayList 함수를 GetNextPtr과 RetrievePtr함수를 이용하여 재작성
@@ -82,7 +98,6 @@ void Application::FindPhoto() {
   cout <<left << "\tEnter a Photo name to search --> ";
 	string inName;
 	cin >> inName;
-
 	PhotoType tRecord;
 	tRecord.SetPhotoName(inName);
 	PhotoType* showRecord;
@@ -95,9 +110,9 @@ void Application::FindPhoto() {
   cout.width(20);
   cout<< left<<"[Photo Name]" ;
   cout.width(20);
-  cout<<left<< "[Event Name]";
+  cout<< left<<"[Event Name]";
   cout.width(20);
-  cout<<left<< "[Contents]" << endl;
+  cout<< left<<"[Contents]" << endl;
 	showRecord->DisplayOnScreen();
 
 	 /*
@@ -116,7 +131,21 @@ void Application::FindPhoto() {
 // 이벤트명을 입력받아서 event list에서 해당 event record를 찾고
 // 존재하면 EventType의 멤버함수 DisplayDetail()에 master list를 전달하여 해당 이벤트에서 찍은 모든 사진의 자세한 정보를 화면에 출력한다.
 void Application::DisplayByEventUsingEL() {
-   //????
+  std::cout  << '\n';
+  cout << "\t*** [ Display Photo on screen by Event List ] ***" << endl;
+  cout.width(40);
+  cout <<left << "\tEnter a Event name to search --> ";
+  string inName;
+  cin >> inName;
+  EventType tEvent;
+  tEvent.SetEventName(inName);
+  EventType* showEvent;
+  if ((showEvent=this->eventList.RetrievePtr(tEvent))==NULL) {
+   std::cout << "\tNo Event in List" << '\n';
+   return;
+  }
+  std::cout << "\tEvent Information searched "<<'\n';
+  showEvent->DisplayDetail(this->master);
 }
 
 
@@ -126,7 +155,36 @@ void Application::DisplayByEventUsingEL() {
 //    이벤트가 존재하면 EventType 멤버함수 FindByNameKey 함수를 이용하여 이벤트에 입력된 사진이 포함되는 지를 확인하여
 //    존재하면 해당 사진 항목의 포인터를 전달받아서 화면에 출력한다.
 void Application::SearchByPhotoNameNEvent() {
-   //????
+  std::cout  << '\n';
+  cout<< "\t******** [   Find by Event & Photo Name  ] ********" << '\n';
+  cout.width(40);
+  cout <<left << "\tEnter a Event name to search --> ";
+  string inEvent;
+  cin >> inEvent;
+  EventType tEvent(inEvent);
+  EventType * findEvent;
+  if ((findEvent=this->eventList.RetrievePtr(tEvent))==NULL) {
+    std::cout << "\tNo Event in List" << '\n';
+    return;
+  }
+  cout.width(40);
+  cout <<left << "\tEnter a Photo name to search --> ";
+  string inName;
+  cin >> inName;
+  PhotoType * showRecord;
+  if ((showRecord=findEvent->FindByNameKey(this->master, inName))==NULL) {
+    std::cout << "\tNo Photo in List" << '\n';
+    return;
+  }
+  std::cout << "\tPhoto Information searched\n ";
+  cout << "\t";
+  cout.width(20);
+  cout<< left<<"[Photo Name]" ;
+  cout.width(20);
+  cout<< left<<"[Event Name]";
+  cout.width(20);
+  cout<< left<<"[Contents]" << endl;
+  showRecord->DisplayOnScreen();
 }
 
 //?????[문제 3-2-B-v] 이벤트명과 내용에 포함된 단어가 함께 일치하는 사진을 찾아서 화면에 출력하는 다음 함수를 구현
@@ -135,17 +193,42 @@ void Application::SearchByPhotoNameNEvent() {
 //  현 이벤트에 소속된 사진 중에서 입력된 내용과 일치하는 첫번째 사진의 포인터를 리턴 받아서
 //  화면에 출력
 void Application::SearchByEventNContents() {
-   string eName, cName;
-   cout << "\t << 이벤트와 내용관련 단어로 사진 검색  >>\n \t검색할 사진의 이벤트와 내용 단어를 입력하세요 --> ";
-   cin >> eName >> cName;
-   //EventType tEvent, *eventPtr;
-   PhotoType* photoPtr;
-   //tEvent.SetEventName(eName);
-   //????
+  std::cout  << '\n';
+  cout<< "\t********* [   Find by Event & Contents  ] *********" << '\n';
+
+   cout.width(40);
+   cout <<left << "\tEnter a Event name to search --> ";
+   string eName;
+   cin >> eName;
+   EventType tEvent(eName);
+   EventType * findEvent;
+   if ((findEvent=this->eventList.RetrievePtr(tEvent))==NULL) {
+     std::cout << "\tNo Event in List" << '\n';
+     return;
+   }
+   cout.width(40);
+   cout <<left << "\tEnter Contents to search --> ";
+   string cName;
+   cin >> cName;
+   PhotoType * showRecord;
+   if ((showRecord=findEvent->FindByContentsKey(this->master, cName))==NULL) {
+     std::cout << "\tNo Contents in List" << '\n';
+     return;
+   }
+   std::cout << "\tPhoto Information searched\n ";
+   cout << "\t";
+   cout.width(20);
+   cout<< left<<"[Photo Name]" ;
+   cout.width(20);
+   cout<< left<<"[Event Name]";
+   cout.width(20);
+   cout<< left<<"[Contents]" << endl;
+   showRecord->DisplayOnScreen();
 }
 
 // event 명을 입력받아서 리스트에서 해당 이벤트에서 찍은 모든 사진을 찾아서 화면에 출력
 void Application::FindPhotoByEvent() {
+  std::cout  << '\n';
   cout << "\t************ [   Find by EventName  ] ************" << '\n';
   cout.width(40);
   cout <<left << "\tEnter a Event name to search --> ";
@@ -158,9 +241,9 @@ void Application::FindPhotoByEvent() {
    cout.width(20);
    cout<< left<<"[Photo Name]" ;
    cout.width(20);
-   cout<<left<< "[Event Name]";
+   cout<< left<<"[Event Name]";
    cout.width(20);
-   cout<<left<< "[Contents]" << endl;
+   cout<< left<<"[Contents]" << endl;
    master.ResetList();
    while (master.GetNextItem(tRecord)) {
       if (tRecord.IsEqualEvent(inName)) {
@@ -201,13 +284,13 @@ void Application::Run() {
          WriteAllToFile();
          break;
       case 8:
-      //   DisplayByEventUsingEL();
+         DisplayByEventUsingEL();
          break;
       case 9:
-      //   SearchByPhotoNameNEvent();
+         SearchByPhotoNameNEvent();
          break;
       case 10:
-   //      SearchByEventNContents();
+         SearchByEventNContents();
          break;
       default:
          cout << "Invalid operation \n";
@@ -269,9 +352,9 @@ int Application::ReadAllFromFile()
    PhotoType temp;
    while (temp.ReadRecordFromFile(inFile))
    {
-      master.Add(temp);
+      //master.Add(temp);
       //?????[문제 3-2-B-i] 위 master.Add()를 지우고 아랫 명령을 활성화
-      //AddPhotoToList(temp);
+      AddPhotoToList(temp);
    }
    cout << "\t****   [   Reading from disk is completed   ]   ****" << endl;
    return 1;

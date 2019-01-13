@@ -46,13 +46,13 @@ bool PhotoType::ReadItemFromKB(){
    return 1;
 }
 
-// 현 PhotoType 객체를 화면에 출력
+// Display PhotoType object on Screen
 void PhotoType::DisplayOnScreen() {
-  cout <<'\t';
-  cout.width(20);
-  cout<<left<<this->photoName;
-  cout.width(20);
-  cout<<left<<this->eventName;
-  cout.width(20);
-  cout<<left<<this->contents<<'\n';
+   cout <<'\t';
+   cout.width(20);
+   cout<<left<<this->photoName;
+   cout.width(20);
+   cout<<left<<this->eventName;
+   cout.width(20);
+   cout<<left<<this->contents<<'\n';
 }

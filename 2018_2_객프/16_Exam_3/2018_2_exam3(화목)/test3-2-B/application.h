@@ -1,9 +1,10 @@
 #pragma once
 #include "list.h"
+#include "event.h"
 #include "photoType.h"
 class Application {
 public:
-   Application(): outFileName("test3-2-A.txt"), inFileName("test3-2-A.txt") {}
+   Application(): outFileName("test3-2-B.txt"), inFileName("test3-2-B.txt") {}
    void Run();  // 응용 프로그램 실행
    void AddPhoto();   // 키보드로부터 사진정보를 입력받아서 리스트에 추가
    void DeletePhoto();   // 사진명을 입력받아서 해당 사진을 리스트에서 삭제
@@ -25,7 +26,7 @@ public:
 
 private:
    List<PhotoType> master;
-   //List<EventType> eventList;
+   List<EventType> eventList;
    string inFileName;
    string outFileName;
 };

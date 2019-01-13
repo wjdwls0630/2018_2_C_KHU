@@ -7,7 +7,6 @@ using namespace std;
 
 
 #define MAXSIZE 100
-
 class KeyNotFound :public std::exception
 {
    std::string message;
@@ -54,8 +53,9 @@ public:
       maxSize = size;
       m_Array = new T[maxSize];
    }
+   /* 소멸자 복구 방법 생각해보기 */
 
-   ~List() { delete [] this->m_Array;}  //   destructor.
+   //~List() { delete [] this->m_Array;  }  //   destructor.
 
    //===========================================================
    int GetLength() {    //   Get a number of records in list.
@@ -198,7 +198,7 @@ template <class T>
 int List<T>::Retrieve(T& data){
 
 	//In Sorted list BinarySearch has O(logn) but it can use when list is sorted
-	if (this->m_Array[0]>data || this->m_Array[m_Length - 1]<data||this->m_Length<0) {
+	if (/*this->m_Array[0]>data || this->m_Array[m_Length - 1]<data||*/this->m_Length==0) {
 		return -1;
 	}
 	int left = 0;
@@ -259,6 +259,7 @@ int List<T> ::Delete(T data) {
 		if (this->IsEmpty()) {
 			throw EmptyList();
 		}
+    this->ResetList();
 		int delete_index=this->Retrieve(data);
 		if (delete_index==-1) {
 			throw KeyNotFound();
